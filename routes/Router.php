@@ -24,12 +24,12 @@ class Router
         $model_file = $model_name . '.php';
         $model_path = APP_MODELS . $model_file;
         if (file_exists($model_path))
-            include APP_MODELS . $model_file;
+            include_once APP_MODELS . $model_file;
 
         $controller_file = $controller_name . '.php';
         $controller_path = APP_CONTROLLERS . $controller_file;
         if (file_exists($controller_path))
-            include APP_CONTROLLERS . $controller_file;
+            include_once APP_CONTROLLERS . $controller_file;
         else
             Router::ErrorPage404();
 

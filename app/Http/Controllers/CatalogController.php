@@ -1,19 +1,20 @@
 <?php
 
+require_once APP_MODELS . 'Product.php';
+
 class CatalogController extends Controller
 {
     function __construct()
     {
-        $this->model = new Catalog();
         $this->view = new View();
     }
 
     function action_index()
     {
-        $products = $this->model->get();
+        $products = Product::all();
         $cards = null;
         foreach ($products as $value => $key) {
-            $cards = $cards . '<a href="/catalog?product=' . $key['name'] . '">' .
+            $cards = $cards . '<a href="/catalog?id=' . $key['id'] . '">' .
                 '<div class="single">' .
                 '<img src="' . $key['image'] . '">' .
                 '<h3>' . $key['name'] . '</h3>' .
@@ -23,7 +24,6 @@ class CatalogController extends Controller
                 '</a>';
         }
 
-
         $this->view->generate('catalog_view.php', 'template_view.php', array(
             'cards' => $cards
         ));
@@ -31,7 +31,7 @@ class CatalogController extends Controller
 
     public function withQuery($query)
     {
-        $product = $this->model->show($query['product']);
+        $product = Product::find($query['id']);
         $this->view->generate('product_view.php', 'template_view.php', array(
             'product' => $product
         ));
