@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 abstract class Model
 {
     abstract static public function all();

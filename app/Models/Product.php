@@ -1,10 +1,14 @@
 <?php
 
+namespace App\Models;
+
+use Framework\Exceptions\NotFoundException;
+
 class Product extends Model
 {
     public static function all()
     {
-        return json_decode(file_get_contents(DB_DIR . 'data.json'), true);;
+        return json_decode(file_get_contents(DB_DIR . 'data.json'), true);
     }
 
     public static function find($id)
@@ -16,8 +20,8 @@ class Product extends Model
                 break;
             }
         }
-        if (!$result)
-            Router::ErrorPage404();
+        if (!isset($result))
+            throw new NotFoundException("Product not found");
         return $result;
     }
 

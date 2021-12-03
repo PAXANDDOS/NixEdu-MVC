@@ -1,14 +1,13 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use Framework\View;
+
 class CartController extends Controller
 {
-    function __construct()
+    public function MainAction()
     {
-        $this->view = new View();
-    }
-
-    function action_index()
-    {
-        $this->view->generate('cart_view.php', 'template_view.php');
+        View::generate('cart.php', 'template.php');
     }
 }

@@ -1,20 +1,18 @@
 <?php
 
-require_once APP_MODELS . 'Product.php';
+namespace App\Http\Controllers;
+
+use Framework\View;
+use App\Models\Product;
 
 class CatalogController extends Controller
 {
-    function __construct()
-    {
-        $this->view = new View();
-    }
-
-    function action_index()
+    public function MainAction()
     {
         $products = Product::all();
         $cards = null;
         foreach ($products as $value => $key) {
-            $cards = $cards . '<a href="/catalog?id=' . $key['id'] . '">' .
+            $cards = $cards . '<a href="/catalog/' . $key['id'] . '">' .
                 '<div class="single">' .
                 '<img src="' . $key['image'] . '">' .
                 '<h3>' . $key['name'] . '</h3>' .
@@ -24,15 +22,15 @@ class CatalogController extends Controller
                 '</a>';
         }
 
-        $this->view->generate('catalog_view.php', 'template_view.php', array(
+        View::generate('catalog.php', 'template.php', array(
             'cards' => $cards
         ));
     }
 
-    public function withQuery($query)
+    public function ProductPage($id)
     {
-        $product = Product::find($query['id']);
-        $this->view->generate('product_view.php', 'template_view.php', array(
+        $product = Product::find($id);
+        View::generate('product.php', 'template.php', array(
             'product' => $product
         ));
     }

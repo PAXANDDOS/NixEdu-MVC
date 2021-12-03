@@ -1,13 +1,12 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use Framework\View;
+
 class SigninController extends Controller
 {
-    function __construct()
-    {
-        $this->view = new View();
-    }
-
-    function action_index()
+    public function MainAction()
     {
         if (isset($_SESSION['name']))
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
@@ -18,6 +17,6 @@ class SigninController extends Controller
             $_SESSION['remoteAddr'] = $_SERVER['REMOTE_ADDR'];
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
         }
-        $this->view->generate('signin_view.php', 'template_view.php');
+        View::generate('signin.php', 'template.php');
     }
 }

@@ -1,14 +1,13 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use Framework\View;
+
 class ErrorController extends Controller
 {
-    function __construct()
+    public function MainAction()
     {
-        $this->view = new View();
-    }
-
-    function action_index()
-    {
-        $this->view->generate('404_view.php', 'template_view.php');
+        View::generate('404.php', 'template.php');
     }
 }
