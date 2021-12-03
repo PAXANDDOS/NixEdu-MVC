@@ -4,7 +4,7 @@ namespace  Framework\Exceptions;
 
 use Exception;
 
-class NotFoundException extends Exception
+class InternalServerException extends Exception
 {
     protected string $message;
 
@@ -16,6 +16,6 @@ class NotFoundException extends Exception
 
     public function __toString()
     {
-        return '<b>An error has occured:</b> ' . $this->message;
+        return '<b>Internal server error:</b> ' . $this->message;
     }
 }

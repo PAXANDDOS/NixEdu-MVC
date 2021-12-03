@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>
-    <a href="/catalog.php">Catalog</a>
+    <a href="/catalog">Catalog</a>
 </div>
 <div class="main">
     <div class="filters">

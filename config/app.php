@@ -1,8 +1,8 @@
 <?php
 
-define('APP_NAME', 'Pokeshop');
-define('APP_ENV', 'local');
-define('APP_URL', 'http://localhost:3000');
+define('APP_NAME', getenv('APP_NAME') ? getenv('APP_NAME') : 'PokeShop');
+define('APP_ENV', getenv('APP_ENV') ? getenv('APP_ENV') : 'local');
+define('APP_URL', getenv('APP_URL') ? getenv('APP_URL') : 'http://localhost:3000');
 
 define('APP_ROOT', dirname(dirname(__FILE__)));
 define('APP_CONTROLLERS', APP_ROOT . '/app/Http/Controllers/');

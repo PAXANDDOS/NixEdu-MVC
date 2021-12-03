@@ -7,16 +7,16 @@ use App\Models\Product;
 
 class CatalogController extends Controller
 {
-    public function MainAction()
+    public function index(): void
     {
-        $products = Product::all();
+        $products = Product::getAll();
         $cards = null;
         foreach ($products as $value => $key) {
-            $cards = $cards . '<a href="/catalog/' . $key['id'] . '">' .
+            $cards = $cards . '<a href="/catalog/' . $key->id . '">' .
                 '<div class="single">' .
-                '<img src="' . $key['image'] . '">' .
-                '<h3>' . $key['name'] . '</h3>' .
-                '<span>' . $key['price'] . '</span>' .
+                '<img src="' . $key->image . '">' .
+                '<h3>' . $key->name . '</h3>' .
+                '<span>$ ' . $key->price . '</span>' .
                 '<label>BUY</label>' .
                 '</div>' .
                 '</a>';
@@ -27,9 +27,9 @@ class CatalogController extends Controller
         ));
     }
 
-    public function ProductPage($id)
+    public function productPage(int $id): void
     {
-        $product = Product::find($id);
+        $product = Product::findOne($id);
         View::generate('product.php', 'template.php', array(
             'product' => $product
         ));

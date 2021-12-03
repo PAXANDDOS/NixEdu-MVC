@@ -1,13 +1,13 @@
 <div class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>
-    <a href="/catalog.php">Catalog</a>
+    <a href="/catalog">Catalog</a>
     <span>/</span>
-    <a href="#"><?php echo $product['name'] ?></a>
+    <a href="#"><?php echo $product->name ?></a>
 </div>
 <div class="card-main">
     <div class="card-demo">
-        <img src="<?php echo $product['image'] ?>" alt="product image">
+        <img src="<?php echo $product->image ?>" alt="product image">
         <div class="card-title">
             <div>
                 <img src="/public/images/star.png" alt="star">
@@ -18,8 +18,8 @@
                 <span>3 Reviews</span>
             </div>
             <div>
-                <h2><?php echo $product['name'] ?></h2>
-                <h3><?php echo $product['price'] ?><small><?php echo $product['stock'] ?> available</small></h3>
+                <h2><?php echo $product->name ?></h2>
+                <h3>$ <?php echo $product->price ?><small><?php echo $product->stock ?> available</small></h3>
             </div>
             <div>
                 <h3>QUANTITY</h3>

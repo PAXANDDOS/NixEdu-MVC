@@ -2,11 +2,9 @@
 
 namespace Framework;
 
-use Framework\Exceptions\NotFoundException;
-
 class Route
 {
-    static function start()
+    public static function start(): void
     {
         $routes = require_once APP_ROOT . '/routes/web.php';
         $uri = explode('?', $_SERVER['REQUEST_URI']);
@@ -26,19 +24,19 @@ class Route
                     $method = $action[1];
                     $class->$method($id);
                     return;
-                } catch (NotFoundException $e) {
-                    Route::Throw404();
+                } catch (\Framework\Exceptions\InternalServerException $e) {
+                    echo $e;
+                    exit();
                 }
             }
         }
         Route::Throw404();
     }
 
-    static function Throw404()
+    private static function Throw404(): void
     {
-        $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
         header('HTTP/1.1 404 Not Found');
         header("Status: 404 Not Found");
-        header('Location:' . $host . '404');
+        header('Location:' . 'http://' . $_SERVER['HTTP_HOST'] . '/' . '404');
     }
 }

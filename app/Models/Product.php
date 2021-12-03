@@ -2,38 +2,67 @@
 
 namespace App\Models;
 
-use Framework\Exceptions\NotFoundException;
-
 class Product extends Model
 {
-    public static function all()
+    public int $id;
+    public string $name;
+    public string $description;
+    public float $price;
+    public int $stock;
+    public string $image;
+
+    public static function getAll(): array
     {
-        return json_decode(file_get_contents(DB_DIR . 'data.json'), true);
+        $data = Product::getData();
+        $products = array();
+        foreach ($data as $item) {
+            $product = new Product();
+            $product->id = $item['id'];
+            $product->name = $item['name'];
+            $product->price = $item['price'];
+            $product->stock = $item['stock'];
+            $product->image = $item['image'];
+            $products[] = $product;
+        }
+
+        return $products;
     }
 
-    public static function find($id)
+    public static function findOne(int $id): Product
     {
-        $products = json_decode(file_get_contents(DB_DIR . 'data.json'), true);
-        foreach ($products as $value => $key) {
-            if ($key['id'] == $id) {
-                $result = $products[$value];
+        $data = Product::getData();
+        $product = new Product();
+        foreach ($data as $item) {
+            if ($item['id'] === $id) {
+                $product->id = $item['id'];
+                $product->name = $item['name'];
+                $product->price = $item['price'];
+                $product->stock = $item['stock'];
+                $product->image = $item['image'];
                 break;
             }
         }
-        if (!isset($result))
-            throw new NotFoundException("Product not found");
-        return $result;
+
+        if (!isset($product))
+            throw new \Framework\Exceptions\InternalServerException("Product not found.");
+        return $product;
     }
 
-    public static function update($data, $id)
-    {
-    }
+    // public static function update($data, int $id): Product
+    // {
+    // }
 
-    public static function create($data)
-    {
-    }
+    // public static function create($data): Product
+    // {
+    // }
 
-    public static function destroy($id)
+    // public static function destroy(int $id): bool
+    // {
+    //     return false;
+    // }
+
+    protected static function getData(): array
     {
+        return json_decode(file_get_contents(DB_DIR . 'data.json'), true);
     }
 }

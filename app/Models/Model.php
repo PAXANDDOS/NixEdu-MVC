@@ -4,13 +4,15 @@ namespace App\Models;
 
 abstract class Model
 {
-    abstract static public function all();
+    abstract public static function getAll(): array;
 
-    abstract static public function create($data);
+    // abstract public static function create($data): Model;
 
-    abstract static public function find($id);
+    abstract public static function findOne(int $id): Model;
 
-    abstract static public function update($data, $id);
+    // abstract public static function update($data, int $id): Model;
 
-    abstract static public function destroy($id);
+    // abstract public static function destroy(int $id): bool;
+
+    abstract protected static function getData(): array;
 }
