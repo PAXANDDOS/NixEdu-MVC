@@ -43,8 +43,9 @@ class Product extends Model
             }
         }
 
-        if (!isset($product))
+        if (!(array)$product)
             throw new \Framework\Exceptions\InternalServerException("Product not found.");
+
         return $product;
     }
 

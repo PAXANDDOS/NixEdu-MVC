@@ -1,11 +1,6 @@
 <?php
 
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\ErrorController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SigninController;
+use App\Http\Controllers\{HomeController, AccountController, CatalogController, SigninController, CartController, ErrorController};
 
 return [
     '/' => [HomeController::class, 'index'],

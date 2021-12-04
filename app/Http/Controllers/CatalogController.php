@@ -10,20 +10,8 @@ class CatalogController extends Controller
     public function index(): void
     {
         $products = Product::getAll();
-        $cards = null;
-        foreach ($products as $value => $key) {
-            $cards = $cards . '<a href="/catalog/' . $key->id . '">' .
-                '<div class="single">' .
-                '<img src="' . $key->image . '">' .
-                '<h3>' . $key->name . '</h3>' .
-                '<span>$ ' . $key->price . '</span>' .
-                '<label>BUY</label>' .
-                '</div>' .
-                '</a>';
-        }
-
         View::generate('catalog.php', 'template.php', array(
-            'cards' => $cards
+            'products' => $products
         ));
     }
 

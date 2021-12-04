@@ -2,11 +2,9 @@
 
 namespace  Framework\Exceptions;
 
-use Exception;
-
-class NotFoundException extends Exception
+class NotFoundException extends \Exception
 {
-    protected string $message;
+    protected $message;
 
     public function __construct(string $message)
     {
@@ -16,6 +14,6 @@ class NotFoundException extends Exception
 
     public function __toString()
     {
-        return '<b>An error has occured:</b> ' . $this->message;
+        return "<b>An error has occured:</b> $this->message";
     }
 }

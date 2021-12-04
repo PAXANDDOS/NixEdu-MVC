@@ -2,11 +2,9 @@
 
 namespace  Framework\Exceptions;
 
-use Exception;
-
-class InternalServerException extends Exception
+class InternalServerException extends \Exception
 {
-    protected string $message;
+    protected $message;
 
     public function __construct(string $message)
     {
@@ -16,6 +14,6 @@ class InternalServerException extends Exception
 
     public function __toString()
     {
-        return '<b>Internal server error:</b> ' . $this->message;
+        return "<b>Internal server error:</b> $this->message";
     }
 }
