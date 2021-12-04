@@ -4,13 +4,13 @@ namespace Framework;
 
 class Session
 {
-    public static function redirectIfNotLogged()
+    public static function redirectIfNotLogged(): void
     {
         if (!isset($_SESSION['name']))
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);
     }
 
-    public static function redirectIfLogged()
+    public static function redirectIfLogged(): void
     {
         if (isset($_SESSION['name']))
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);

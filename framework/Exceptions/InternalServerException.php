@@ -14,6 +14,7 @@ class InternalServerException extends \Exception
 
     public function __toString()
     {
+        error_log(\Framework\Handler::formatLog("Exception", $this->message, $this->getFile(), $this->getLine()), 3, APP_LOG);
         return "<b>Internal server error:</b> $this->message";
     }
 }
