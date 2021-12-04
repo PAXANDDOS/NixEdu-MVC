@@ -9,4 +9,4 @@ define('APP_CONTROLLERS', APP_ROOT . '/app/Http/Controllers/');
 define('APP_MIDDLEWARE', APP_ROOT . '/app/Http/Middleware/');
 define('APP_MODELS', APP_ROOT . '/app/Models/');
 define('APP_VIEWS', APP_ROOT . '/resources/views/');
-define('APP_FRAMEWORK', APP_ROOT . '/framework/');
+define('APP_LOG', APP_ROOT . '/storage/logs/app.log');
