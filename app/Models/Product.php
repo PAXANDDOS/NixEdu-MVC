@@ -14,7 +14,7 @@ class Product extends Model
     public static function getAll(): array
     {
         $data = Product::getData();
-        $products = array();
+        $products = [];
         foreach ($data as $item) {
             $product = new Product();
             $product->id = $item['id'];

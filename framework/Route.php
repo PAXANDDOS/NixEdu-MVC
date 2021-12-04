@@ -27,6 +27,9 @@ class Route
                 } catch (\Framework\Exceptions\InternalServerException $e) {
                     echo $e;
                     exit();
+                } catch (\TypeError $e) {
+                    echo $e->getMessage();
+                    exit();
                 }
             }
         }
