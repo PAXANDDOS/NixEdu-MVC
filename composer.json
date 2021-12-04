@@ -1,0 +1,19 @@
+{
+    "name": "paxanddos/pokeshop",
+    "description": "Online shop for a lot of Pokemon stuff!",
+    "type": "project",
+    "license": "MIT License",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Framework\\": "framework/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Paul Litovka",
+            "email": "pashalitovka@gmail.com"
+        }
+    ],
+    "require": {}
+}

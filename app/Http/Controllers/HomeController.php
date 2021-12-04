@@ -1,14 +1,13 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use Framework\View;
+
 class HomeController extends Controller
 {
-    function __construct()
+    public function index(): void
     {
-        $this->view = new View();
-    }
-
-    function action_index()
-    {
-        $this->view->generate('home_view.php', 'template_view.php');
+        View::generate('home.php', 'template.php');
     }
 }

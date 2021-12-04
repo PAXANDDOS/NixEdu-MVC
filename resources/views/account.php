@@ -7,6 +7,8 @@
     <div class="login">
         <h1>Welcome to PokeShop!</h1>
         <h2>You're logged in as <?php echo $_SESSION['name'] ?>!</h2>
-        <a href='/account/logout'>Log out</a>
+        <form method="POST">
+            <input type="submit" name='logout' value="Log out" />
+        </form>
     </div>
 </div>

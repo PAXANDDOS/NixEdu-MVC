@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>
-    <a href="/catalog.php">Catalog</a>
+    <a href="/catalog">Catalog</a>
 </div>
 <div class="main">
     <div class="filters">
@@ -57,7 +57,7 @@
             <input type="range" name="pricing" id="range" min="0" max="9999" step="1" value="0"><br>
             <div id="rangenum">
                 <label id="min">0</label>
-                <label id="max">9999</label>
+                <label id="max">999</label>
             </div>
         </form>
     </div>
@@ -65,7 +65,7 @@
         <div class="page_head">
             <div id="number">
                 <h2>CATALOG</h2>
-                <span><b>PRODUCTS:</b> ( 1 - 30 of 1023 )</span>
+                <span><b>PRODUCTS:</b> ( 1 - <?php echo count($products) ?> of <?php echo count($products) ?> )</span>
             </div>
             <div id="pages">
                 <span>SORT BY:</span>
@@ -94,7 +94,20 @@
             </div>
         </div>
         <div class="page_body">
-            <?php echo $cards ?>
+            <?php
+            foreach ($products as $value => $key) {
+                echo "
+                <a href='/catalog/$key->id'>
+                    <div class='single'>
+                        <img src='$key->image' alt='Product image'>
+                        <h3>$key->name</h3>
+                        <span>$ $key->price</span>
+                        <label>BUY</label>
+                    </div>
+                </a>
+                ";
+            }
+            ?>
         </div>
     </div>
 </div>

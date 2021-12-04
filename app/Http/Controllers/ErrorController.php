@@ -1,14 +1,15 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use Framework\View;
+
 class ErrorController extends Controller
 {
-    function __construct()
+    public function index(): void
     {
-        $this->view = new View();
-    }
-
-    function action_index()
-    {
-        $this->view->generate('404_view.php', 'template_view.php');
+        if (isset($_POST['back']))
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/", false, 303);
+        View::generate('404.php', 'template.php');
     }
 }

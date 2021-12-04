@@ -1,39 +1,25 @@
 <?php
 
-require_once APP_MODELS . 'Product.php';
+namespace App\Http\Controllers;
+
+use Framework\View;
+use App\Models\Product;
 
 class CatalogController extends Controller
 {
-    function __construct()
+    public function index(): void
     {
-        $this->view = new View();
+        $products = Product::getAll();
+        View::generate('catalog.php', 'template.php', [
+            'products' => $products
+        ]);
     }
 
-    function action_index()
+    public function productPage(int $id): void
     {
-        $products = Product::all();
-        $cards = null;
-        foreach ($products as $value => $key) {
-            $cards = $cards . '<a href="/catalog?id=' . $key['id'] . '">' .
-                '<div class="single">' .
-                '<img src="' . $key['image'] . '">' .
-                '<h3>' . $key['name'] . '</h3>' .
-                '<span>' . $key['price'] . '</span>' .
-                '<label>BUY</label>' .
-                '</div>' .
-                '</a>';
-        }
-
-        $this->view->generate('catalog_view.php', 'template_view.php', array(
-            'cards' => $cards
-        ));
-    }
-
-    public function withQuery($query)
-    {
-        $product = Product::find($query['id']);
-        $this->view->generate('product_view.php', 'template_view.php', array(
+        $product = Product::findOne($id);
+        View::generate('product.php', 'template.php', [
             'product' => $product
-        ));
+        ]);
     }
 }

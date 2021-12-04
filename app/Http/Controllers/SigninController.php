@@ -1,16 +1,15 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use Framework\View;
+
 class SigninController extends Controller
 {
-    function __construct()
+    public function index(): void
     {
-        $this->view = new View();
-    }
+        \Framework\Session::redirectIfLogged();
 
-    function action_index()
-    {
-        if (isset($_SESSION['name']))
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
         if (isset($_POST['name'])) {
             $_SESSION['name'] = $_POST['name'];
             $_SESSION['password'] = hash("md5", $_POST['password']);
@@ -18,6 +17,6 @@ class SigninController extends Controller
             $_SESSION['remoteAddr'] = $_SERVER['REMOTE_ADDR'];
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
         }
-        $this->view->generate('signin_view.php', 'template_view.php');
+        View::generate('signin.php', 'template.php');
     }
 }

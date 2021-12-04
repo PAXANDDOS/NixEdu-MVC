@@ -1,10 +1,8 @@
 <?php
 
+namespace App\Http\Controllers;
+
 abstract class Controller
 {
-    public $model;
-    public $view;
-
-    abstract function __construct();
-    abstract function action_index();
+    abstract public function index(): void;
 }

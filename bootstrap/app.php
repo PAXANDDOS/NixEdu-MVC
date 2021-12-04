@@ -1,8 +1,10 @@
 <?php
 
-require_once APP_MODELS . 'Model.php';
-require_once APP_ROOT . '/config/view.php';
-require_once APP_CONTROLLERS . 'Controller.php';
-require_once APP_ROUTES . 'Router.php';
+(new \Framework\DotEnv(dirname(dirname(__FILE__)) . '/.env'))->load();
 
-Router::start();
+foreach (glob(dirname(dirname(__FILE__)) . '/config' . '/*.php') as $file)
+    require_once $file;
+
+\Framework\Session::protect();
+
+\Framework\Route::start();
