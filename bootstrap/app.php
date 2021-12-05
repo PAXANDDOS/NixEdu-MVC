@@ -8,4 +8,12 @@ foreach (glob(dirname(dirname(__FILE__)) . '/config' . '/*.php') as $file)
 \Framework\Handler::register();
 \Framework\Session::protect();
 
-\Framework\Route::start();
+$data = \Framework\Route::start();
+$method = $data[1];
+
+try {
+    ($data[0])->$method(...$data[2]);
+} catch (\Framework\Exceptions\InternalServerException $e) {
+    echo $e;
+    exit();
+}
