@@ -2,7 +2,15 @@
 
 namespace App\Http\Controllers;
 
-abstract class Controller
+/**
+ * Contains controller methods for route and each subroute.
+ */
+interface Controller
 {
-    abstract public function index(): void;
+    /**
+     * Controls the main page.
+     *
+     * @return void
+     */
+    public function index(): void;
 }

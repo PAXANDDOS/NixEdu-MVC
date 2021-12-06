@@ -47,10 +47,10 @@
         </div>
         <div class="user">
             <a href="/cart">CART</a>
-            <a href="/signin"><?php echo isset($_SESSION['name']) ? "ACCOUNT" : "SIGN IN"; ?></a>
+            <a href="/signin"><?php echo \Framework\Session::isAuthorized() ? "ACCOUNT" : "SIGN IN"; ?></a>
         </div>
     </div>
-    <?php include APP_VIEWS . $content_view; ?>
+    <?php include APP_VIEWS . $content; ?>
     <footer>
         <a href="https://paxanddos.github.io/" target="_blank">Copyright &#169; PokéShop | PAXANDDOS | All rights reserved</a>
     </footer>

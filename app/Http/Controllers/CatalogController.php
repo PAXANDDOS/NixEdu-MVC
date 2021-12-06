@@ -5,8 +5,16 @@ namespace App\Http\Controllers;
 use Framework\View;
 use App\Models\Product;
 
-class CatalogController extends Controller
+/**
+ * Contains controller methods for route and each subroute of cart.
+ */
+class CatalogController implements Controller
 {
+    /**
+     * Controls the main page of catalog.
+     *
+     * @return void
+     */
     public function index(): void
     {
         $products = Product::getAll();
@@ -15,6 +23,12 @@ class CatalogController extends Controller
         ]);
     }
 
+    /**
+     * Controls the product page.
+     *
+     * @param int $id ID of the product.
+     * @return void
+     */
     public function productPage(int $id): void
     {
         $product = Product::findOne($id);

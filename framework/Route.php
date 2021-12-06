@@ -2,8 +2,16 @@
 
 namespace Framework;
 
+/**
+ * Contains methods for routing
+ */
 class Route
 {
+    /**
+     * Parses current request URL.
+     *
+     * @return array Class, method, and arguments of the controller that must be called.
+     */
     public static function start(): array
     {
         $routes = require_once APP_ROOT . '/routes/web.php';
@@ -20,6 +28,11 @@ class Route
         Route::Throw404();
     }
 
+    /**
+     * Redirects user to a 404 page.
+     *
+     * @return void
+     */
     private static function Throw404(): void
     {
         header("HTTP/1.1 404 Not Found");

@@ -2,6 +2,9 @@
 
 namespace  Framework\Exceptions;
 
+/**
+ * Exception for if something is missing.
+ */
 class NotFoundException extends \Exception
 {
     protected $message;

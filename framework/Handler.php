@@ -2,8 +2,16 @@
 
 namespace Framework;
 
+/**
+ * Contains methods for various error, exceptions handling and logging.
+ */
 class Handler
 {
+    /**
+     * Registers custom error handling function as default.
+     *
+     * @return void
+     */
     public static function register(): void
     {
         set_error_handler(function (int $level, string $message, string $file, int $line, array $context): bool {
@@ -78,7 +86,16 @@ class Handler
         });
     }
 
-    public static function formatLog(string $type, string $message, string $file, string $line): string
+    /**
+     * Load the messages for the given locale.
+     *
+     * @param  string  $type Type of error.
+     * @param  string  $message Message about the error.
+     * @param  string  $file File that contains given error.
+     * @param  int  $line Line of the file that contains given error.
+     * @return string Log-formatted string.
+     */
+    public static function formatLog(string $type, string $message, string $file, int $line): string
     {
         $trace = str_replace("\n", '', print_r(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 10), true));
         $date = gmdate("Y-m-d\TH:i:s\Z");
@@ -86,7 +103,16 @@ class Handler
         return "[$date] $type at line $line in $file: $str Stack trace: $trace\n";
     }
 
-    public static function formatScreen(string $type, string $message, string $file, string $line): string
+    /**
+     * Load the messages for the given locale.
+     *
+     * @param  string  $type Type of error.
+     * @param  string  $message Message about the error.
+     * @param  string  $file File that contains given error.
+     * @param  int  $line Line of the file that contains given error.
+     * @return string HTML page about the error.
+     */
+    public static function formatScreen(string $type, string $message, string $file, int $line): string
     {
         $trace = print_r(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 10), true);
 

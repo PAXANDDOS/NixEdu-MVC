@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Contains information about the app and its' directories.
+ */
+
 define('APP_NAME', getenv('APP_NAME') ? getenv('APP_NAME') : 'PokeShop');
 define('APP_ENV', getenv('APP_ENV') ? getenv('APP_ENV') : 'local');
 define('APP_URL', getenv('APP_URL') ? getenv('APP_URL') : 'http://localhost:3000');
