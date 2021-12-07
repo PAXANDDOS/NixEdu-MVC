@@ -46,11 +46,14 @@
             <input type="search" placeholder="Search Pikachu, Plush, T-Shirts...">
         </div>
         <div class="user">
-            <a href="/cart">CART</a>
-            <a href="/signin"><?php echo isset($_SESSION['name']) ? "ACCOUNT" : "SIGN IN"; ?></a>
+            <?php echo \Framework\Session::isAuthorized() ? "<a href='/cart'>CART</a>" : null; ?>
+            <?php echo \Framework\Session::isAuthorized()
+                ? "<a href='/account'>ACCOUNT</a>"
+                : "<a href='/signin'>SIGN IN</a>";
+            ?>
         </div>
     </div>
-    <?php include APP_VIEWS . $content_view; ?>
+    <?php include APP_VIEWS . $content; ?>
     <footer>
         <a href="https://paxanddos.github.io/" target="_blank">Copyright &#169; PokéShop | PAXANDDOS | All rights reserved</a>
     </footer>

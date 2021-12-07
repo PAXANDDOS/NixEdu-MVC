@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Framework\View;
 
-class ErrorController extends Controller
+/**
+ * Contains controller methods for route and each subroute of error page.
+ */
+class ErrorController implements Controller
 {
+    /**
+     * Controls the main page of 404 error.
+     *
+     * @return void
+     */
     public function index(): void
     {
         if (isset($_POST['back']))

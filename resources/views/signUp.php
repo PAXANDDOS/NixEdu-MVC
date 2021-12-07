@@ -12,18 +12,22 @@
                 <input type="name" id="name" name="name" maxlength='10' required />
             </label>
             <label>
+                Your email<br />
+                <input type="email" id="email" name="email" maxlength="32" required />
+            </label>
+            <label>
                 Your password<br />
                 <input type="password" id="password" name="password" minlength="8" maxlength="64" required />
             </label>
-            <button type="submit">Sign in</button>
+            <label>
+                Repeat your password<br />
+                <input type="password" id="password" name="password_confirmation" minlength="8" maxlength="64" required />
+            </label>
+            <button type="submit">Sign up</button>
         </form>
         <span>
-            Forgot your password?
-            <a href="#">Let&apos;s get it back!</a>
-        </span>
-        <span>
-            Not a member yet?
-            <a href="/signup">Sign up!</a>
+            Already a member?
+            <a href="/signin">Sign in!</a>
         </span>
     </div>
 </div>

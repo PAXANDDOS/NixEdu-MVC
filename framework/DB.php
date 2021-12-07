@@ -2,8 +2,16 @@
 
 namespace Framework;
 
+/**
+ * Contains methods for database manipulations.
+ */
 class DB
 {
+    /**
+     * Set connection with SQL database using PDO.
+     *
+     * @return \PDO
+     */
     public static function connect(): \PDO
     {
         try {

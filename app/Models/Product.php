@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * Contains fields and methods for the Product model.
+ */
 class Product extends Model
 {
     public int $id;
@@ -11,6 +14,11 @@ class Product extends Model
     public int $stock;
     public string $image;
 
+    /**
+     * Converts the database data into an array of Product objects.
+     *
+     * @return array Array of products.
+     */
     public static function getAll(): array
     {
         $data = Product::getData();
@@ -28,6 +36,12 @@ class Product extends Model
         return $products;
     }
 
+    /**
+     * Gets the variable value from $_SESSION.
+     *
+     * @param  int $id ID of the requested product.
+     * @return Product Single product object.
+     */
     public static function findOne(int $id): Product
     {
         $data = Product::getData();
@@ -44,24 +58,16 @@ class Product extends Model
         }
 
         if (!(array)$product)
-            throw new \Framework\Exceptions\InternalServerException("Product not found.");
+            throw new \Framework\Exceptions\NotFoundException("Product not found.");
 
         return $product;
     }
 
-    // public static function update($data, int $id): Product
-    // {
-    // }
-
-    // public static function create($data): Product
-    // {
-    // }
-
-    // public static function destroy(int $id): bool
-    // {
-    //     return false;
-    // }
-
+    /**
+     * Reads data from a fake database;
+     *
+     * @return array JSON decoded array of data.
+     */
     protected static function getData(): array
     {
         return json_decode(file_get_contents(DB_DIR . 'data.json'), true);

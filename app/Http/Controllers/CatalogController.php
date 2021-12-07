@@ -5,8 +5,16 @@ namespace App\Http\Controllers;
 use Framework\View;
 use App\Models\Product;
 
-class CatalogController extends Controller
+/**
+ * Contains controller methods for route and each subroute of cart.
+ */
+class CatalogController implements Controller
 {
+    /**
+     * Controls the main page of catalog.
+     *
+     * @return void
+     */
     public function index(): void
     {
         $products = Product::getAll();
@@ -15,11 +23,33 @@ class CatalogController extends Controller
         ]);
     }
 
+    /**
+     * Controls the product page.
+     *
+     * @param int $id ID of the product.
+     * @return void
+     */
     public function productPage(int $id): void
     {
         $product = Product::findOne($id);
+        $added = false;
+
+        if (($cart = \Framework\Session::get('cart')) !== NULL)
+            foreach ($cart as $id)
+                if ($product->id === $id)
+                    $added = true;
+
+        if (isset($_POST['add'])) {
+            if (($cart = \Framework\Session::get('cart')) !== null) {
+                $cart[] = $product->id;
+                \Framework\Session::create('cart', $cart);
+                header("Refresh:0");
+            } else header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);
+        }
+
         View::generate('product.php', 'template.php', [
-            'product' => $product
+            'product' => $product,
+            'added' => $added
         ]);
     }
 }

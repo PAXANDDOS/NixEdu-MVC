@@ -2,6 +2,9 @@
 
 namespace Framework;
 
+/**
+ * Contains methods for .env file manipulations.
+ */
 class DotEnv
 {
     protected $path;
@@ -13,6 +16,11 @@ class DotEnv
         $this->path = $path;
     }
 
+    /**
+     * Loads all variables from .env into $_ENV.
+     *
+     * @return void
+     */
     public function load(): void
     {
         if (!is_readable($this->path))

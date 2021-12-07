@@ -2,9 +2,17 @@
 
 namespace Framework;
 
+/**
+ * Contains methods for routing
+ */
 class Route
 {
-    public static function start(): void
+    /**
+     * Parses current request URL.
+     *
+     * @return array Class, method, and arguments of the controller that must be called.
+     */
+    public static function start(): array
     {
         $routes = require_once APP_ROOT . '/routes/web.php';
         $uri = explode('?', $_SERVER['REQUEST_URI']);
@@ -12,27 +20,19 @@ class Route
         if ($urn[1] === 'index' || $urn[1] === 'index.php')
             $urn[1] = '';
         foreach ($routes as $route => $action) {
-            if (preg_match("/\/$urn[1]\/?$/", $route) && preg_match("/\/$urn[1]\/?$/", $uri[0])) {
-                $class = new $action[0];
-                $method = $action[1];
-                $class->$method();
-                return;
-            } else if (preg_match("/\/$urn[1]\/[^\/]+/", $route)) {
-                try {
-                    $id = $urn[2];
-                    $class = new $action[0];
-                    $method = $action[1];
-                    $class->$method($id);
-                    return;
-                } catch (\Framework\Exceptions\InternalServerException $e) {
-                    echo $e;
-                    exit();
-                }
-            }
+            if (preg_match("/\/$urn[1]\/?$/", $route) && preg_match("/\/$urn[1]\/?$/", $uri[0]))
+                return [new $action[0], $action[1], []];
+            else if (preg_match("/\/$urn[1]\/[^\/]+/", $route))
+                return [new $action[0], $action[1], [$urn[2]]];
         }
         Route::Throw404();
     }
 
+    /**
+     * Redirects user to a 404 page.
+     *
+     * @return void
+     */
     private static function Throw404(): void
     {
         header("HTTP/1.1 404 Not Found");
