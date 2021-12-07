@@ -16,7 +16,7 @@ class AccountController implements Controller
      */
     public function index(): void
     {
-        \Framework\Session::redirectIfNotLogged();
+        \Framework\Session::redirectIfNotAuthorized();
 
         if (\Framework\Session::get('name') === false)
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);

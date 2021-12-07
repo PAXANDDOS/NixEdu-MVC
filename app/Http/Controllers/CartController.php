@@ -16,6 +16,22 @@ class CartController implements Controller
      */
     public function index(): void
     {
-        View::generate('cart.php', 'template.php');
+        \Framework\Session::redirectIfNotAuthorized();
+
+        $products = [];
+        foreach (\Framework\Session::get('cart') as $id)
+            $products[] = \App\Models\Product::findOne($id);
+
+        if (isset($_POST['remove'])) {
+            $cart = \Framework\Session::get('cart');
+            if (($key = array_search($_POST['removeItem'], $cart)) !== false)
+                unset($cart[$key]);
+            \Framework\Session::create('cart', $cart);
+            header("Refresh:0");
+        }
+
+        View::generate('cart.php', 'template.php', [
+            'products' => $products
+        ]);
     }
 }

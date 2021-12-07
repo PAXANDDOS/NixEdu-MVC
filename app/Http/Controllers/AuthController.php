@@ -16,10 +16,11 @@ class AuthController implements Controller
      */
     public function index(): void
     {
-        \Framework\Session::redirectIfLogged();
+        \Framework\Session::redirectIfAuthorized();
 
         if (isset($_POST['name'])) {
             \Framework\Session::create('name', $_POST['name']);
+            \Framework\Session::create('cart', []);
             \Framework\Session::create('userAgent', $_SERVER['HTTP_USER_AGENT']);
             \Framework\Session::create('remoteAddr', $_SERVER['REMOTE_ADDR']);
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
@@ -34,7 +35,7 @@ class AuthController implements Controller
      */
     public function signUp(): void
     {
-        \Framework\Session::redirectIfLogged();
+        \Framework\Session::redirectIfAuthorized();
 
         if (isset($_POST['name'])) {
             \Framework\Session::create('name', $_POST['name']);

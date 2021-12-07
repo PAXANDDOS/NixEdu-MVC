@@ -8,7 +8,7 @@
 <div class="card-main">
     <div class="card-demo">
         <img src="<?php echo $product->image ?>" alt="product image">
-        <div class="card-title">
+        <form class="card-title" method="POST">
             <div>
                 <img src="/public/images/star.png" alt="star">
                 <img src="/public/images/star.png" alt="star">
@@ -26,9 +26,12 @@
                 <input type="number" name="quantity" min="1" max="10" step="1" value="1">
             </div>
             <div>
-                <button>ADD TO CART</button>
+                <?php echo $added
+                    ? "<input type='submit' name='add' disabled value='ALREADY IN CART' />"
+                    : "<input type='submit' name='add' value='ADD TO CART' />" ?>
+
             </div>
-        </div>
+        </form>
     </div>
     <div class="card-desc">
         <h2>DESCRIPTION</h2>

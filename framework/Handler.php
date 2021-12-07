@@ -14,7 +14,7 @@ class Handler
      */
     public static function register(): void
     {
-        set_error_handler(function (int $level, string $message, string $file, int $line, array $context): bool {
+        set_error_handler(function (int $level, string $message, string $file, int $line, ?array $context): bool {
             switch ($level) {
                 case E_WARNING:
                     $type = 'Warning';

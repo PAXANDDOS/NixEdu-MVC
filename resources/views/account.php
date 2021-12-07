@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>
-    <a href="#">Sing in</a>
+    <a href="#">Account</a>
 </div>
 <div class="main">
     <div class="login">

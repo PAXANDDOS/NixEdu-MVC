@@ -56,7 +56,7 @@ class Session
      *
      * @return void
      */
-    public static function redirectIfNotLogged(): void
+    public static function redirectIfNotAuthorized(): void
     {
         if (!isset($_SESSION['name']))
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);
@@ -67,7 +67,7 @@ class Session
      *
      * @return void
      */
-    public static function redirectIfLogged(): void
+    public static function redirectIfAuthorized(): void
     {
         if (isset($_SESSION['name']))
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
