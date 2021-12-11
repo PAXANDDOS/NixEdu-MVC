@@ -18,6 +18,5 @@ $method = $data[1];
 try {
     ($data[0])->$method(...$data[2]);
 } catch (\Framework\Exceptions\NotFoundException $e) {
-    echo $e;
-    exit();
+    die($e);
 }

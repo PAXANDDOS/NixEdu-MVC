@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Framework\View;
+use App\Models\User;
 
 /**
  * Contains controller methods for route and each subroute of authorization pages
@@ -19,12 +20,19 @@ class AuthController implements Controller
         \Framework\Session::redirectIfAuthorized();
 
         if (isset($_POST['name'])) {
-            \Framework\Session::create('name', $_POST['name']);
-            \Framework\Session::create('cart', []);
-            \Framework\Session::create('userAgent', $_SERVER['HTTP_USER_AGENT']);
-            \Framework\Session::create('remoteAddr', $_SERVER['REMOTE_ADDR']);
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
+            if (!$data = User::findWhere('name', $_POST['name']))
+                die("Invalid credentials!");
+
+            if ($data[0]->password === hash('md5', $_POST['password'])) {
+                \Framework\Session::create('name', $_POST['name']);
+                \Framework\Session::create('cart', []);
+                \Framework\Session::create('userAgent', $_SERVER['HTTP_USER_AGENT']);
+                \Framework\Session::create('remoteAddr', $_SERVER['REMOTE_ADDR']);
+
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
+            } else die("Invalid credentials!");
         }
+
         View::generate('signIn.php', 'template.php');
     }
 
@@ -38,11 +46,18 @@ class AuthController implements Controller
         \Framework\Session::redirectIfAuthorized();
 
         if (isset($_POST['name'])) {
-            \Framework\Session::create('name', $_POST['name']);
-            \Framework\Session::create('userAgent', $_SERVER['HTTP_USER_AGENT']);
-            \Framework\Session::create('remoteAddr', $_SERVER['REMOTE_ADDR']);
-            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/account", false, 303);
+            if ($_POST['password'] !== $_POST['password_confirmation'])
+                die("Password did not match.");
+
+            User::create([
+                "name" => $_POST['name'],
+                "email" => $_POST['email'],
+                "password" => hash("md5", $_POST['password'])
+            ]);
+
+            header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);
         }
+
         View::generate('signUp.php', 'template.php');
     }
 }

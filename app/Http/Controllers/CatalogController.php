@@ -34,13 +34,16 @@ class CatalogController implements Controller
         $product = Product::findOne($id);
         $added = false;
 
-        if (($cart = \Framework\Session::get('cart')) !== NULL)
+        if (($cart = \Framework\Session::get('cart')))
             foreach ($cart as $id)
                 if ($product->id === $id)
                     $added = true;
 
         if (isset($_POST['add'])) {
-            if (($cart = \Framework\Session::get('cart')) !== null) {
+            if (!\Framework\Session::isAuthorized())
+                header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);
+
+            if (($cart = \Framework\Session::get('cart')) || $cart !== NULL) {
                 $cart[] = $product->id;
                 \Framework\Session::create('cart', $cart);
                 header("Refresh:0");
