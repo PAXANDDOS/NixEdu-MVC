@@ -14,7 +14,7 @@ class Handler
      */
     public static function register(): void
     {
-        set_error_handler(function (int $level, string $message, string $file, int $line, ?array $context): bool {
+        set_error_handler(function (int $level, string $message, string $file, int $line): bool {
             switch ($level) {
                 case E_WARNING:
                     $type = 'Warning';
@@ -47,7 +47,7 @@ class Handler
                     return false;
             }
 
-            echo Handler::formatScreen($type, $message, $file, $line);
+            die(Handler::formatScreen($type, $message, $file, $line));
             error_log(Handler::formatLog($type, $message, $file, $line), 3, APP_LOG);
 
             return true;

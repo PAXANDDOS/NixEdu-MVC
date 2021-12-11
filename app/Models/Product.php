@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Framework\DB;
+
 /**
  * Contains fields and methods for the Product model.
  */
-class Product extends Model
+class Product implements Model
 {
     public int $id;
     public string $name;
-    public string $description;
     public float $price;
     public int $stock;
     public string $image;
+    public string $created_at;
+    public string $updated_at;
 
     /**
      * Converts the database data into an array of Product objects.
@@ -21,55 +24,88 @@ class Product extends Model
      */
     public static function getAll(): array
     {
-        $data = Product::getData();
-        $products = [];
-        foreach ($data as $item) {
-            $product = new Product();
-            $product->id = $item['id'];
-            $product->name = $item['name'];
-            $product->price = $item['price'];
-            $product->stock = $item['stock'];
-            $product->image = $item['image'];
-            $products[] = $product;
-        }
-
-        return $products;
+        return DB::connect()->query("SELECT * FROM products")->fetchAll(\PDO::FETCH_CLASS, __CLASS__);
     }
 
     /**
-     * Gets the variable value from $_SESSION.
+     * Creates new product in the database.
+     *
+     * @param  array $data Array of parameters.
+     * @return Product Newly created Product object.
+     */
+    public static function create(array $data): Product
+    {
+        $db = DB::connect();
+        $stm = $db->prepare("INSERT INTO products (name, price, stock, image, created_at, updated_at) VALUES (:name, :price, :stock, :image, now(), now())");
+        try {
+            $stm->execute([
+                ':name' => $data['name'],
+                ':price' => $data['price'],
+                ':stock' => $data['stock'],
+                ':image' => $data['image']
+            ]);
+        } catch (\PDOException $e) {
+            echo "Creation failed: " . $e->getMessage();
+        }
+
+        return $db->query("SELECT * FROM products WHERE name='" . $data['name'] . "'")->fetchObject(__CLASS__);
+    }
+
+    /**
+     * Gets the requested Product from the database.
      *
      * @param  int $id ID of the requested product.
-     * @return Product Single product object.
+     * @return Product Single Product object.
      */
     public static function findOne(int $id): Product
     {
-        $data = Product::getData();
-        $product = new Product();
-        foreach ($data as $item) {
-            if ($item['id'] === $id) {
-                $product->id = $item['id'];
-                $product->name = $item['name'];
-                $product->price = $item['price'];
-                $product->stock = $item['stock'];
-                $product->image = $item['image'];
-                break;
-            }
-        }
-
-        if (!(array)$product)
-            throw new \Framework\Exceptions\NotFoundException("Product not found.");
-
-        return $product;
+        return DB::connect()->query("SELECT * FROM products WHERE id=$id")->fetchObject(__CLASS__);
     }
 
     /**
-     * Reads data from a fake database;
+     * Gets the requested Product from the database.
      *
-     * @return array JSON decoded array of data.
+     * @param  int $id ID of the requested product.
+     * @return Product|array Single Product object or array of Product.
      */
-    protected static function getData(): array
+    public static function findWhere(string $param, mixed $value): Product | array
     {
-        return json_decode(file_get_contents(DB_DIR . 'data.json'), true);
+        return DB::connect()->query("SELECT * FROM products WHERE $param='$value'")->fetchAll(\PDO::FETCH_CLASS, __CLASS__);
+    }
+
+    /**
+     * Updates product in the database.
+     *
+     * @param  array $data Array of parameters.
+     * @param  int $id ID of the requested product.
+     * @return Product Newly updated Product object.
+     */
+    public static function update(array $data, int $id): Product
+    {
+        $db = DB::connect();
+        $stm = $db->prepare("UPDATE products SET name=:name, price=:price, stock=:stock, image=:image, updated_at=now() WHERE id=$id");
+        try {
+            $stm->execute([
+                ':name' => $data['name'],
+                ':price' => $data['price'],
+                ':stock' => $data['stock'],
+                ':image' => $data['image']
+            ]);
+        } catch (\PDOException $e) {
+            echo "Updating failed: " . $e->getMessage();
+        }
+
+        return $db->query("SELECT * FROM products WHERE id=$id")->fetchObject(__CLASS__);
+    }
+
+    /**
+     * Removes requested product from the database.
+     *
+     * @param  int $id ID of the requested product.
+     * @return bool Operation status.
+     */
+    public static function destroy(int $id): bool
+    {
+        return DB::connect()->prepare("DELETE FROM products WHERE id=$id")->execute();
     }
 }

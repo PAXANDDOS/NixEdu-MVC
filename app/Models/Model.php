@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-abstract class Model
+interface Model
 {
-    abstract public static function getAll(): array;
+    public static function getAll(): array;
 
-    // abstract public static function create($data): Model;
+    public static function create(array $data): Model;
 
-    abstract public static function findOne(int $id): Model;
+    public static function findOne(int $id): Model;
 
-    // abstract public static function update($data, int $id): Model;
+    public static function update(array $data, int $id): Model;
 
-    // abstract public static function destroy(int $id): bool;
-
-    abstract protected static function getData(): array;
+    public static function destroy(int $id): bool;
 }
