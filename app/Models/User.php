@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Framework\DB;
 
-class User implements Model
+class User extends Model
 {
     public int $id;
     public string $name;

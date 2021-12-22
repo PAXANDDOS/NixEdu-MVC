@@ -7,7 +7,7 @@ use Framework\View;
 /**
  * Contains controller methods for route and each subroute of error page.
  */
-class ErrorController implements Controller
+class ErrorController implements ControllerInterface
 {
     /**
      * Controls the main page of 404 error.

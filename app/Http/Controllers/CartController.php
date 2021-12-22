@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Framework\View;
+use Framework\Session;
 
 /**
  * Contains controller methods for route and each subroute of cart.
  */
-class CartController implements Controller
+class CartController implements ControllerInterface
 {
     /**
      * Controls the main page of cart.
@@ -16,17 +17,28 @@ class CartController implements Controller
      */
     public function index(): void
     {
-        \Framework\Session::redirectIfNotAuthorized();
+        Session::redirectIfNotAuthorized();
 
         $products = [];
-        foreach (\Framework\Session::get('cart') as $id)
+        foreach (Session::get('cart') as $id)
             $products[] = \App\Models\Product::findOne($id);
 
         if (isset($_POST['remove'])) {
-            $cart = \Framework\Session::get('cart');
+            $cart = Session::get('cart');
             if (($key = array_search($_POST['removeItem'], $cart)) !== false)
                 unset($cart[$key]);
-            \Framework\Session::create('cart', $cart);
+            Session::create('cart', $cart);
+            header("Refresh:0");
+        }
+
+        if (isset($_POST['order'])) {
+            $user_id = Session::get('id');
+            foreach (Session::get('cart') as $product_id)
+                \App\Models\Order::create([
+                    'user_id' => $user_id,
+                    'product_id' => $product_id
+                ]);
+            Session::create('cart', []);
             header("Refresh:0");
         }
 

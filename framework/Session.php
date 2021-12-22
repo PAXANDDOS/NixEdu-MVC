@@ -94,10 +94,23 @@ class Session
             isset($_SESSION['userAgent']) &&
             ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT'] ||
                 $_SESSION['remoteAddr'] != $_SERVER['REMOTE_ADDR'])
-        ) {
-            Session::destroyCookie();
+        )
             Session::destroy();
-        }
+    }
+
+    /**
+     * Sets up session data for newly authorized user.
+     *
+     * @return void
+     */
+    public static function setup($user): void
+    {
+        Session::create('id', $user->id);
+        Session::create('name', $user->name);
+        Session::create('email', $user->email);
+        Session::create('cart', []);
+        Session::create('userAgent', $_SERVER['HTTP_USER_AGENT']);
+        Session::create('remoteAddr', $_SERVER['REMOTE_ADDR']);
     }
 
     /**
@@ -107,6 +120,7 @@ class Session
      */
     public static function destroy(): void
     {
+        Session::destroyCookie();
         session_unset();
         session_destroy();
     }

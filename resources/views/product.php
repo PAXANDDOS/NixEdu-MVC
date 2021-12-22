@@ -1,3 +1,6 @@
+<style>
+    <?php include APP_STYLES . '/product.css'; ?>
+</style>
 <div class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>

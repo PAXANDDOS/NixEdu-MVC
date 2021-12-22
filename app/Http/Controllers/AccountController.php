@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Framework\Session;
 use Framework\View;
 
 /**
  * Contains controller methods for route and each subroutes of account.
  */
-class AccountController implements Controller
+class AccountController implements ControllerInterface
 {
     /**
      * Controls the main page of account.
@@ -16,16 +17,20 @@ class AccountController implements Controller
      */
     public function index(): void
     {
-        \Framework\Session::redirectIfNotAuthorized();
+        Session::redirectIfNotAuthorized();
 
-        if (\Framework\Session::get('name') === false)
+        if (Session::get('name') === false)
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);
 
         if (isset($_POST['logout'])) {
-            session_destroy();
+            Session::destroy();
             header("Location: http://" . $_SERVER["HTTP_HOST"] . "/signin", false, 303);
         }
 
-        View::generate('account.php', 'template.php');
+        $orders = \App\Models\Order::findWhere('user_id', Session::get('id'));
+
+        View::generate('account.php', 'template.php', [
+            'orders' => $orders
+        ]);
     }
 }

@@ -8,7 +8,7 @@ use App\Models\Product;
 /**
  * Contains controller methods for route and each subroute of cart.
  */
-class CatalogController implements Controller
+class CatalogController implements ControllerInterface
 {
     /**
      * Controls the main page of catalog.

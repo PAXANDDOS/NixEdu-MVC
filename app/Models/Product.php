@@ -7,7 +7,7 @@ use Framework\DB;
 /**
  * Contains fields and methods for the Product model.
  */
-class Product implements Model
+class Product extends Model
 {
     public int $id;
     public string $name;
