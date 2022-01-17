@@ -10,7 +10,7 @@
 </div>
 <div class="card-main">
     <div class="card-demo">
-        <img src="<?php echo $product->image ?>" alt="product image">
+        <img src="/public/images/<?php echo $product->image ?>" alt="product image">
         <form class="card-title" method="POST">
             <div>
                 <img src="/public/images/star.png" alt="star">

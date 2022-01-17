@@ -102,7 +102,7 @@
                 echo "
                 <a href='/catalog/$key->id'>
                     <div class='single'>
-                        <img src='$key->image' alt='Product image'>
+                        <img src='/public/images/$key->image' alt='Product image'>
                         <h3>$key->name</h3>
                         <span>$ $key->price</span>
                         <label>BUY</label>
