@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 /**
  * Contains controller methods for route and each subroute.
  */
-interface Controller
+interface ControllerInterface
 {
     /**
      * Controls the main page.

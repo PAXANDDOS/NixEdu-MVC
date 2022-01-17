@@ -1,3 +1,6 @@
+<style>
+    <?php include APP_STYLES . '/cart.css'; ?>
+</style>
 <div class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>
@@ -21,9 +24,9 @@
         if (!$exists)
             echo "<h2>Nothing in cart yet. Start shopping!</h2>";
         else echo "
-        <div class='cartConfirm'>
-            <h2>Proceed to payment</h2>
-        </div>
+        <form class='cartConfirm' method='POST'>
+            <input type='submit' name='order' value='Submit order'>
+        </form>
         ";
         ?>
     </div>

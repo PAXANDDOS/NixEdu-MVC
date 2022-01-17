@@ -47,8 +47,8 @@ class Handler
                     return false;
             }
 
-            die(Handler::formatScreen($type, $message, $file, $line));
             error_log(Handler::formatLog($type, $message, $file, $line), 3, APP_LOG);
+            die(Handler::formatScreen($type, $message, $file, $line));
 
             return true;
         }, E_ALL);
@@ -79,8 +79,15 @@ class Handler
                 while (ob_get_level())
                     ob_end_clean();
 
-            echo Handler::formatScreen($type, $error["message"], $error["file"], $error["line"]);
             error_log(Handler::formatLog($type, $error["message"], $error["file"], $error["line"]), 3, APP_LOG);
+            echo Handler::formatScreen($type, $error["message"], $error["file"], $error["line"]);
+
+            return true;
+        });
+
+        set_exception_handler(function ($e): bool {
+            error_log(Handler::formatLog("Exception", $e->getMessage(), $e->getFile(), $e->getLine()), 3, APP_LOG);
+            echo Handler::formatScreen("Exception", $e->getMessage(), $e->getFile(), $e->getLine());
 
             return true;
         });

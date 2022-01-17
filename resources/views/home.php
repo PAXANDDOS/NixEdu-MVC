@@ -1,3 +1,6 @@
+<style>
+    <?php include APP_STYLES . '/welcome.css'; ?>
+</style>
 <div class="breadcrumbs">
     <a href="/">Home</a>
 </div>

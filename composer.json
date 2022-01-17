@@ -1,13 +1,21 @@
 {
     "name": "paxanddos/pokeshop",
     "description": "Online shop for a lot of Pokemon stuff!",
+    "keywords": [
+        "pokemon",
+        "shop",
+        "store"
+    ],
     "type": "project",
-    "license": "MIT License",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Framework\\": "framework/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {}
     },
     "authors": [
         {
@@ -15,5 +23,15 @@
             "email": "pashalitovka@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "require-dev": {},
+    "scripts": {},
+    "extra": {},
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

@@ -13,4 +13,5 @@ define('APP_CONTROLLERS', APP_ROOT . '/app/Http/Controllers/');
 define('APP_MIDDLEWARE', APP_ROOT . '/app/Http/Middleware/');
 define('APP_MODELS', APP_ROOT . '/app/Models/');
 define('APP_VIEWS', APP_ROOT . '/resources/views/');
+define('APP_STYLES', APP_ROOT . '/resources/styles/');
 define('APP_LOG', APP_ROOT . '/storage/logs/app.log');

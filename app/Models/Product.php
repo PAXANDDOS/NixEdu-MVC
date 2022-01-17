@@ -7,7 +7,7 @@ use Framework\DB;
 /**
  * Contains fields and methods for the Product model.
  */
-class Product implements Model
+class Product extends Model
 {
     public int $id;
     public string $name;
@@ -57,7 +57,7 @@ class Product implements Model
      * @param  int $id ID of the requested product.
      * @return Product Single Product object.
      */
-    public static function findOne(int $id): Product
+    public static function findOne(int | string $id): Product
     {
         return DB::connect()->query("SELECT * FROM products WHERE id=$id")->fetchObject(__CLASS__);
     }
@@ -80,7 +80,7 @@ class Product implements Model
      * @param  int $id ID of the requested product.
      * @return Product Newly updated Product object.
      */
-    public static function update(array $data, int $id): Product
+    public static function update(array $data, int | string $id): Product
     {
         $db = DB::connect();
         $stm = $db->prepare("UPDATE products SET name=:name, price=:price, stock=:stock, image=:image, updated_at=now() WHERE id=$id");
