@@ -53,7 +53,7 @@ class Order extends Model
      * @param  int $id ID of the requested order.
      * @return Order Single Order object.
      */
-    public static function findOne(int $id): Order
+    public static function findOne(int | string $id): Order
     {
         return DB::connect()->query("SELECT * FROM orders LEFT JOIN products ON products.id = orders.product_id WHERE orders.id=$id")->fetchObject(__CLASS__);
     }
@@ -76,7 +76,7 @@ class Order extends Model
      * @param  int $id ID of the requested order.
      * @return Order Newly updated Order object.
      */
-    public static function update(array $data, int $id): Order
+    public static function update(array $data, int | string $id): Order
     {
         $db = DB::connect();
         $stm = $db->prepare("UPDATE orders SET user_id=:user_id, product_id=:product_id WHERE id=$id");

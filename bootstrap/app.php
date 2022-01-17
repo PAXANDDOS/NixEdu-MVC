@@ -12,7 +12,7 @@ foreach (glob(dirname(dirname(__FILE__)) . '/config' . '/*.php') as $file)
 \Framework\Handler::register();
 \Framework\Session::protect();
 
-$data = \Framework\Route::start();
+$data = \Framework\Router::start();
 $method = $data[1];
 
 try {

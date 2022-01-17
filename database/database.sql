@@ -31,6 +31,15 @@ CREATE TABLE `orders` (
   `updated_at` TIMESTAMP DEFAULT now()
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8mb4 COLLATE 'utf8mb4_unicode_ci';
 
+CREATE TABLE `sessions` (
+  `token` VARCHAR(255) NOT NULL INDEX,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `created_at` TIMESTAMP DEFAULT now(),
+  `expires_at` TIMESTAMP DEFAULT DATEADD(day, 2, NOW())
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8mb4 COLLATE 'utf8mb4_unicode_ci';
+
 ALTER TABLE `orders` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 ALTER TABLE `orders` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+ALTER TABLE `sessions` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);

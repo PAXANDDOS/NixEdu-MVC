@@ -52,7 +52,7 @@ class User extends Model
      * @param  int $id ID of the requested user.
      * @return User Single User object.
      */
-    public static function findOne(int $id): User
+    public static function findOne(int | string $id): User
     {
         return DB::connect()->query("SELECT * FROM users WHERE id=$id")->fetchObject(__CLASS__);
     }
@@ -75,7 +75,7 @@ class User extends Model
      * @param  int $id ID of the requested user.
      * @return User Newly updated User object.
      */
-    public static function update(array $data, int $id): User
+    public static function update(array $data, int | string $id): User
     {
         $db = DB::connect();
         $stm = $db->prepare("UPDATE users SET name=:name, email=:email, password=:password, updated_at=now() WHERE id=$id");
