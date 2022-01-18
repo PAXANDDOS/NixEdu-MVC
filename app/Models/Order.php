@@ -61,7 +61,8 @@ class Order extends Model
     /**
      * Gets the requested Order from the database.
      *
-     * @param  int $id ID of the requested order.
+     * @param string $param Searched parameter.
+     * @param mixed $value Parameter value.
      * @return Order|array Single Order object or array of Order.
      */
     public static function findWhere(string $param, mixed $value): Order | array

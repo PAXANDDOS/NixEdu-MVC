@@ -16,7 +16,7 @@ class CatalogController extends Controller
      */
     public function index(): void
     {
-        echo self::json(Product::getAll());
+        self::response('json', Product::getAll());
     }
 
     /**
@@ -25,8 +25,8 @@ class CatalogController extends Controller
      * @param int $id ID of the product.
      * @return void
      */
-    public function show($id): void
+    public function show(int $id): void
     {
-        echo self::json(Product::findOne($id));
+        self::response('json', Product::findOne($id));
     }
 }

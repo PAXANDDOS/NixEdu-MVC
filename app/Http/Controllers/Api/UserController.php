@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index(): void
     {
-        echo self::json(User::getAll());
+        self::response('json', User::getAll());
     }
 
     /**
@@ -25,8 +25,8 @@ class UserController extends Controller
      * @param int $id ID of the user.
      * @return void
      */
-    public function show($id): void
+    public function show(int $id): void
     {
-        echo self::json(User::findOne($id));
+        self::response('json', User::findOne($id));
     }
 }

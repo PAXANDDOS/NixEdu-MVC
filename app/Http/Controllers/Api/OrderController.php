@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index(): void
     {
-        echo self::json(Order::getAll());
+        self::response('json', Order::getAll());
     }
 
     /**
@@ -25,9 +25,9 @@ class OrderController extends Controller
      * @param int $id ID of the order.
      * @return void
      */
-    public function show($id): void
+    public function show(int $id): void
     {
-        echo self::json(Order::findOne($id));
+        self::response('json', Order::findOne($id));
     }
 
     /**
@@ -37,7 +37,7 @@ class OrderController extends Controller
      */
     public function create($data): void
     {
-        echo self::json(Order::create($data));
+        self::response('json', Order::create($data), 201);
     }
 
     /**
@@ -45,8 +45,8 @@ class OrderController extends Controller
      *
      * @return void
      */
-    public function destroy($id): void
+    public function destroy(int $id): void
     {
-        echo self::json(Order::destroy($id));
+        self::response('json', Order::destroy($id), 201);
     }
 }

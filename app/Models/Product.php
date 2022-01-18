@@ -65,7 +65,8 @@ class Product extends Model
     /**
      * Gets the requested Product from the database.
      *
-     * @param  int $id ID of the requested product.
+     * @param string $param Searched parameter.
+     * @param mixed $value Parameter value.
      * @return Product|array Single Product object or array of Product.
      */
     public static function findWhere(string $param, mixed $value): Product | array

@@ -40,8 +40,8 @@ class Router
 
         foreach ($routes as $route => $action) {
             $call = explode(" ", $route);
-            if (preg_match("/\/$urn[1]\/?$/", $call[1]) && preg_match("/\/$urn[1]\/?$/", $path)) {
-                if ($_SERVER['REQUEST_METHOD'] === $call[0]) {
+            if (preg_match("/\/$urn[1]\/?$/", $call[1]) && preg_match("/\/$urn[1]\/?$/", $path))
+                if ($_SERVER['REQUEST_METHOD'] === $call[0])
                     switch ($_SERVER['REQUEST_METHOD']) {
                         case "GET":
                             return [new $action[0], $action[1], []];
@@ -49,10 +49,27 @@ class Router
                             $data = json_decode(file_get_contents('php://input'));
                             return [new $action[0], $action[1], [$data]];
                     }
+                else continue;
+            else if (preg_match("/\/$urn[1]\/[^\/]+/", $call[1])) {
+                if ($urn[1] === 'auth') {
+                    if ($call[1] !== $path)
+                        continue;
+                    $data = json_decode(file_get_contents('php://input'));
+                    return [new $action[0], $action[1], [$data]];
+                } else {
+                    if ($_SERVER['REQUEST_METHOD'] === $call[0])
+                        switch ($_SERVER['REQUEST_METHOD']) {
+                            case "GET":
+                            case "DELETE":
+                                return [new $action[0], $action[1], [$urn[2]]];
+                            case "PUT":
+                            case "PATCH":
+                                $data = json_decode(file_get_contents('php://input'));
+                                return [new $action[0], $action[1], [$urn[2], $data]];
+                        }
+                    else continue;
                 }
-            } else if (preg_match("/\/$urn[1]\/[^\/]+/", $call[1]))
-                if ($_SERVER['REQUEST_METHOD'] === $call[0])
-                    return [new $action[0], $action[1], [$urn[2]]];
+            }
         }
         self::Throw404();
     }
