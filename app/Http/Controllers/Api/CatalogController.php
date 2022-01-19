@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Framework\API;
 use App\Models\Product;
 
 /**
@@ -16,7 +17,7 @@ class CatalogController extends Controller
      */
     public function index(): void
     {
-        echo self::json(Product::getAll());
+        API::response('json', Product::getAll());
     }
 
     /**
@@ -25,8 +26,8 @@ class CatalogController extends Controller
      * @param int $id ID of the product.
      * @return void
      */
-    public function show($id): void
+    public function show(int $id): void
     {
-        echo self::json(Product::findOne($id));
+        API::response('json', Product::findOne($id));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Framework\{API, Auth};
 use App\Models\Order;
 
 /**
@@ -16,7 +17,7 @@ class OrderController extends Controller
      */
     public function index(): void
     {
-        echo self::json(Order::getAll());
+        API::response('json', Order::findWhere('user_id', Auth::user()->id));
     }
 
     /**
@@ -25,9 +26,10 @@ class OrderController extends Controller
      * @param int $id ID of the order.
      * @return void
      */
-    public function show($id): void
+    public function show(int $id): void
     {
-        echo self::json(Order::findOne($id));
+        Auth::user();
+        API::response('json', Order::findOne($id));
     }
 
     /**
@@ -35,9 +37,20 @@ class OrderController extends Controller
      *
      * @return void
      */
-    public function create($data): void
+    public function create(array $data): void
     {
-        echo self::json(Order::create($data));
+        $user = Auth::user();
+        foreach ($data as $product) {
+            $quantity = property_exists($product, 'quantity') ? $product->quantity : 1;
+            Order::create([
+                'user_id' => $user->id,
+                'product_id' => $product->id,
+                'quantity' => $quantity,
+            ]);
+        }
+        API::response('json', [
+            'message' => "Order succesfully created."
+        ], 201);
     }
 
     /**
@@ -45,8 +58,9 @@ class OrderController extends Controller
      *
      * @return void
      */
-    public function destroy($id): void
+    public function destroy(int $id): void
     {
-        echo self::json(Order::destroy($id));
+        Auth::user();
+        API::response('json', Order::destroy($id), 201);
     }
 }

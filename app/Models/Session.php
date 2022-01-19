@@ -12,7 +12,6 @@ class Session extends Model
     public string $token;
     public string $user_id;
     public string $created_at;
-    public string $expires_at;
 
     /**
      * Converts the database data into an array of Session objects.
@@ -30,7 +29,7 @@ class Session extends Model
      * @param  array $data Array of parameters.
      * @return Session Newly created Session object.
      */
-    public static function create(array $data): Session
+    public static function create(array $data): Session | bool
     {
         $db = DB::connect();
         $stm = $db->prepare("INSERT INTO sessions (user_id, token) VALUES (:user_id, :token)");
@@ -43,7 +42,7 @@ class Session extends Model
             echo "Creation failed: " . $e->getMessage();
         }
 
-        return $db->query("SELECT * FROM sessions WHERE token=" . $data['token'])->fetchObject(__CLASS__);
+        return $db->query("SELECT * FROM sessions WHERE token='" . $data['token'] . "'")->fetchObject(__CLASS__);
     }
 
     /**
@@ -52,9 +51,21 @@ class Session extends Model
      * @param  string $id ID of the requested session.
      * @return Session Single Session object.
      */
-    public static function findOne(int | string $token): Session
+    public static function findOne(int | string $token): Session | bool
     {
-        return DB::connect()->query("SELECT * FROM sessions LEFT JOIN users ON users.id = sessions.user_id WHERE session.token=$token")->fetchObject(__CLASS__);
+        return DB::connect()->query("SELECT * FROM sessions WHERE token='$token'")->fetchObject(__CLASS__);
+    }
+
+    /**
+     * Gets the requested Session from the database.
+     *
+     * @param string $param Searched parameter.
+     * @param mixed $value Parameter value.
+     * @return Product|array Single Product object or array of Product.
+     */
+    public static function findWhere(string $param, mixed $value): Product | array | bool
+    {
+        return DB::connect()->query("SELECT * FROM sessions WHERE $param='$value'")->fetchAll(\PDO::FETCH_CLASS, __CLASS__);
     }
 
     /**
@@ -77,7 +88,7 @@ class Session extends Model
             echo "Updating failed: " . $e->getMessage();
         }
 
-        return $db->query("SELECT * FROM sessions WHERE token=$token")->fetchObject(__CLASS__);
+        return $db->query("SELECT * FROM sessions WHERE token='$token'")->fetchObject(__CLASS__);
     }
 
     /**
@@ -86,8 +97,8 @@ class Session extends Model
      * @param  int $id ID of the requested session.
      * @return bool Operation status.
      */
-    public static function destroy(int $id): bool
+    public static function destroy(int | string $token): bool
     {
-        return DB::connect()->prepare("DELETE FROM sessions WHERE id=$id")->execute();
+        return DB::connect()->prepare("DELETE FROM sessions WHERE token='$token'")->execute();
     }
 }

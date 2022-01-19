@@ -60,7 +60,8 @@ class User extends Model
     /**
      * Gets the requested User from the database.
      *
-     * @param  int $id ID of the requested user.
+     * @param string $param Searched parameter.
+     * @param mixed $value Parameter value.
      * @return User|array Single User object or array of Users.
      */
     public static function findWhere(string $param, mixed $value): User | array
