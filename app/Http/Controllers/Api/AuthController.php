@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
-use App\Models\Session;
+use Framework\{API, Auth};
+use App\Models\{User, Session};
 
 /**
  * API methods for authorization
@@ -19,19 +19,14 @@ class AuthController extends Controller
     public function signIn(mixed $data): void
     {
         if (!$user = User::findWhere('name', $data->name))
-            self::response('json', ["message" => "Invalid credentials."], 400);
+            API::response('json', ["message" => "Invalid credentials."], 400);
         if ($user[0]->password !== hash('md5', $data->password))
-            self::response('json', ["message" => "Invalid password."], 403);
+            API::response('json', ["message" => "Invalid password."], 403);
         if ($session = Session::findWhere('user_id', $user[0]->id))
             Session::destroy($session[0]->token);
 
-        $token = self::attempt($data->password);
-        Session::create([
-            'token' => $token,
-            'user_id' => $user[0]->id,
-        ]);
-
-        self::response('json', [
+        $token = Auth::attempt($user[0]);
+        API::response('json', [
             'message' => "Signed in.",
             'cookie' => [
                 'id' => $user[0]->id,
@@ -50,7 +45,20 @@ class AuthController extends Controller
      */
     public function signUp(mixed $data): void
     {
-        echo 'signup';
+        if (User::findWhere('name', $data->name))
+            API::response('json', ["message" => "This user name is already taken."], 400);
+        if ($data->password !== $data->password_confirmation)
+            API::response('json', ["message" => "Passwords did not match."], 400);
+
+        User::create([
+            "name" => $data->name,
+            "email" => $data->email,
+            "password" => hash("md5", $data->password)
+        ]);
+
+        API::response('json', [
+            'message' => "Successfully signed up."
+        ], 201);
     }
 
     /**
@@ -60,13 +68,8 @@ class AuthController extends Controller
      */
     public function signOut(): void
     {
-        $token = explode('Bearer ', apache_request_headers()['Authorization'])[1];
-        if (!Session::findOne($token))
-            self::response('json', [
-                "message" => 'Invalid token.'
-            ]);
-        Session::destroy($token);
-        self::response('json', [
+        Session::destroy(Auth::token());
+        API::response('json', [
             "message" => 'Successfully signed out.'
         ]);
     }

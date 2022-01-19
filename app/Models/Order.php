@@ -10,8 +10,9 @@ use Framework\DB;
 class Order extends Model
 {
     public int $id;
-    public string $user_id;
-    public string $product_id;
+    public int $user_id;
+    public int $product_id;
+    public int $quantity;
     public string $created_at;
     public string $updated_at;
 
@@ -34,11 +35,12 @@ class Order extends Model
     public static function create(array $data): Order
     {
         $db = DB::connect();
-        $stm = $db->prepare("INSERT INTO orders (user_id, product_id) VALUES (:user_id, :product_id)");
+        $stm = $db->prepare("INSERT INTO orders (user_id, product_id, quantity) VALUES (:user_id, :product_id, :quantity)");
         try {
             $stm->execute([
                 ':user_id' => $data['user_id'],
                 ':product_id' => $data['product_id'],
+                ':quantity' => $data['quantity'],
             ]);
         } catch (\PDOException $e) {
             echo "Creation failed: " . $e->getMessage();
@@ -80,11 +82,12 @@ class Order extends Model
     public static function update(array $data, int | string $id): Order
     {
         $db = DB::connect();
-        $stm = $db->prepare("UPDATE orders SET user_id=:user_id, product_id=:product_id WHERE id=$id");
+        $stm = $db->prepare("UPDATE orders SET user_id=:user_id, product_id=:product_id, quantity=:quantity WHERE id=$id");
         try {
             $stm->execute([
                 ':user_id' => $data['user_id'],
                 ':product_id' => $data['product_id'],
+                ':quantity' => $data['quantity'],
             ]);
         } catch (\PDOException $e) {
             echo "Updating failed: " . $e->getMessage();

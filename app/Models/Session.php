@@ -12,7 +12,6 @@ class Session extends Model
     public string $token;
     public string $user_id;
     public string $created_at;
-    public string $expires_at;
 
     /**
      * Converts the database data into an array of Session objects.
@@ -43,7 +42,7 @@ class Session extends Model
             echo "Creation failed: " . $e->getMessage();
         }
 
-        return $db->query("SELECT * FROM sessions WHERE token=" . $data['token'])->fetchObject(__CLASS__);
+        return $db->query("SELECT * FROM sessions WHERE token='" . $data['token'] . "'")->fetchObject(__CLASS__);
     }
 
     /**
@@ -89,7 +88,7 @@ class Session extends Model
             echo "Updating failed: " . $e->getMessage();
         }
 
-        return $db->query("SELECT * FROM sessions WHERE token=$token")->fetchObject(__CLASS__);
+        return $db->query("SELECT * FROM sessions WHERE token='$token'")->fetchObject(__CLASS__);
     }
 
     /**
@@ -100,6 +99,6 @@ class Session extends Model
      */
     public static function destroy(int | string $token): bool
     {
-        return DB::connect()->prepare("DELETE FROM sessions WHERE token=$token")->execute();
+        return DB::connect()->prepare("DELETE FROM sessions WHERE token='$token'")->execute();
     }
 }
