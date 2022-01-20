@@ -1,8 +1,11 @@
 <?php
 
-namespace Framework;
+namespace Framework\Api;
 
-class API
+/**
+ * Contains API methods to operate HTTP.
+ */
+class Http
 {
     /**
      * Creates and sends an HTTP response.

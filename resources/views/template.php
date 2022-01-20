@@ -44,11 +44,12 @@
             <input type="search" placeholder="Search Pikachu, Plush, T-Shirts...">
         </div>
         <div class="user">
-            <?php echo \Framework\Session::isAuthorized() ? "<a href='/cart'>CART</a>" : null; ?>
-            <?php echo \Framework\Session::isAuthorized()
-                ? "<a href='/account'>ACCOUNT</a>"
-                : "<a href='/signin'>SIGN IN</a>";
-            ?>
+            <?php if (\Framework\Session::isAuthorized()) : ?>
+                <a href='/cart'>CART</a>
+                <a href='/account'>ACCOUNT</a>
+            <?php else : ?>
+                <a href='/signin'>SIGN IN</a>
+            <?php endif ?>
         </div>
     </div>
     <?php include APP_VIEWS . $content; ?>

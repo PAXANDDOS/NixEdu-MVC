@@ -6,11 +6,11 @@
     <span>/</span>
     <a href="/catalog">Catalog</a>
     <span>/</span>
-    <a href="#"><?php echo $product->name ?></a>
+    <a href="#"><?= $product->name ?></a>
 </div>
 <div class="card-main">
     <div class="card-demo">
-        <img src="/public/images/<?php echo $product->image ?>" alt="product image">
+        <img src="/public/images/<?= $product->image ?>" alt="product image">
         <form class="card-title" method="POST">
             <div>
                 <img src="/public/images/star.png" alt="star">
@@ -21,18 +21,19 @@
                 <span>3 Reviews</span>
             </div>
             <div>
-                <h2><?php echo $product->name ?></h2>
-                <h3>$ <?php echo $product->price ?><small><?php echo $product->stock ?> available</small></h3>
+                <h2><?= $product->name ?></h2>
+                <h3>$ <?= $product->price ?><small><?= $product->stock ?> available</small></h3>
             </div>
             <div>
                 <h3>QUANTITY</h3>
                 <input type="number" name="quantity" min="1" max="10" step="1" value="1">
             </div>
             <div>
-                <?php echo $added
-                    ? "<input type='submit' name='add' disabled value='ALREADY IN CART' />"
-                    : "<input type='submit' name='add' value='ADD TO CART' />" ?>
-
+                <?php if ($added) : ?>
+                    <input type='submit' name='add' disabled value='ALREADY IN CART' />
+                <?php else : ?>
+                    <input type='submit' name='add' value='ADD TO CART' />
+                <?php endif ?>
             </div>
         </form>
     </div>

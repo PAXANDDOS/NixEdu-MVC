@@ -12,7 +12,7 @@
         <form method="POST">
             <label>
                 Your name<br />
-                <input type="name" id="name" name="name" maxlength='10' required />
+                <input type="name" id="name" name="name" maxlength='16' required />
             </label>
             <label>
                 Your password<br />

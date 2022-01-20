@@ -24,8 +24,51 @@
         }
     ],
     "require": {},
-    "require-dev": {},
-    "scripts": {},
+    "require-dev": {
+        "codeception/codeception": "^4.1.28",
+        "codeception/module-phpbrowser": "^2.0.2",
+        "codeception/module-asserts": "^2.0.1",
+        "codeception/module-db": "^2.0.0",
+        "codeception/module-rest": "^2.0.1",
+        "vlucas/phpdotenv": "^5.4.1"
+    },
+    "scripts": {
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php -S 0.0.0.0:8000"
+        ],
+        "build": [
+            "@composer install --no-dev"
+        ],
+        "test": [
+            "@php vendor/bin/codecept run --steps"
+        ],
+        "test-boot": [
+            "@php vendor/bin/codecept bootstrap"
+        ],
+        "test-generate-cest": [
+            "@php vendor/bin/codecept generate:cest"
+        ],
+        "test-generate-cept": [
+            "@php vendor/bin/codecept generate:cept"
+        ],
+        "test-generate-suite": [
+            "@php vendor/bin/codecept generate:suite"
+        ],
+        "test-build": [
+            "@php vendor/bin/codecept build"
+        ]
+    },
+    "scripts-descriptions": {
+        "serve": "Starts the server.",
+        "build": "Creates autoload file. Ignores dev dependencies.",
+        "test": "Runs all tests or of specific type.",
+        "test-boot": "Bootstraps the codeception.",
+        "test-generate-cest": "Generates test of CEST type.",
+        "test-generate-cept": "Generates test of CEPT type.",
+        "test-generate-suite": "Generates suite for codeception.",
+        "test-build": "Builds codeception classes for suites."
+    },
     "extra": {},
     "config": {
         "optimize-autoloader": true,
