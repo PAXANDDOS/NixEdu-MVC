@@ -23,14 +23,13 @@
             "email": "pashalitovka@gmail.com"
         }
     ],
-    "require": {},
     "require-dev": {
-        "codeception/codeception": "^4.1.28",
-        "codeception/module-phpbrowser": "^2.0.2",
-        "codeception/module-asserts": "^2.0.1",
-        "codeception/module-db": "^2.0.0",
-        "codeception/module-rest": "^2.0.1",
-        "vlucas/phpdotenv": "^5.4.1"
+        "codeception/codeception": "^4.1",
+        "codeception/module-asserts": "^2.0",
+        "codeception/module-db": "^2.0",
+        "codeception/module-phpbrowser": "^2.0",
+        "codeception/module-rest": "^2.0",
+        "vlucas/phpdotenv": "^5.4"
     },
     "scripts": {
         "serve": [

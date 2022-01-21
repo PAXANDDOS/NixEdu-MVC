@@ -12,4 +12,6 @@ modules:
         user: "%DB_USERNAME%"
         password: "%DB_PASSWORD%"
         populate: false
+        cleanup: false
+        populator: "%MYSQL_PATH% -u $user -h $host $dbname < $dump"
   step_decorators: ~
