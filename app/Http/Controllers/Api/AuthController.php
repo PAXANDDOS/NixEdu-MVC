@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Framework\{API, Auth};
+use Framework\Api\{Http, Auth, Validation};
 use App\Models\{User, Session};
 
 /**
- * API methods for authorization
+ * Contains API methods for authorization
  */
 class AuthController extends Controller
 {
@@ -18,15 +18,16 @@ class AuthController extends Controller
      */
     public function signIn(mixed $data): void
     {
+        Validation::validateUser($data->name, null, $data->password);
         if (!$user = User::findWhere('name', $data->name))
-            API::response('json', ["message" => "Invalid credentials."], 400);
+            Http::response('json', ["message" => "Invalid credentials."], 400);
         if ($user[0]->password !== hash('md5', $data->password))
-            API::response('json', ["message" => "Invalid password."], 403);
+            Http::response('json', ["message" => "Invalid password."], 403);
         if ($session = Session::findWhere('user_id', $user[0]->id))
             Session::destroy($session[0]->token);
 
         $token = Auth::attempt($user[0]);
-        API::response('json', [
+        Http::response('json', [
             'message' => "Signed in.",
             'cookie' => [
                 'id' => $user[0]->id,
@@ -45,10 +46,10 @@ class AuthController extends Controller
      */
     public function signUp(mixed $data): void
     {
+        Validation::validateUser($data->name, $data->email, $data->password);
+        Validation::validatePassMatch($data->password, $data->password_confirmation);
         if (User::findWhere('name', $data->name))
-            API::response('json', ["message" => "This user name is already taken."], 400);
-        if ($data->password !== $data->password_confirmation)
-            API::response('json', ["message" => "Passwords did not match."], 400);
+            Http::response('json', ["message" => "This user name is already taken."], 400);
 
         User::create([
             "name" => $data->name,
@@ -56,7 +57,7 @@ class AuthController extends Controller
             "password" => hash("md5", $data->password)
         ]);
 
-        API::response('json', [
+        Http::response('json', [
             'message' => "Successfully signed up."
         ], 201);
     }
@@ -69,7 +70,7 @@ class AuthController extends Controller
     public function signOut(): void
     {
         Session::destroy(Auth::token());
-        API::response('json', [
+        Http::response('json', [
             "message" => 'Successfully signed out.'
         ]);
     }

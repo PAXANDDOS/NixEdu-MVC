@@ -1,13 +1,17 @@
 <?php
 
-namespace Framework;
+namespace Framework\Api;
 
 use App\Models\{Session, User};
 
+/**
+ * Contains methods to operate with users API tokens.
+ */
 class Auth
 {
     /**
      * Looks for authorization token of specific type.
+     * Acts like middleware: throws exception if user is not authorized.
      *
      * @param string $type Type of the token.
      * @return string Authorization token.
@@ -16,15 +20,15 @@ class Auth
     {
         $headers = apache_request_headers();
         if (!array_key_exists('Authorization', $headers))
-            API::response('json', ['message' => 'You are not authorized.'], 403);
+            Http::response('json', ['message' => 'You are not authorized.'], 401);
 
         $authData = explode(" ", $headers['Authorization']);
         if ($authData[0] !== "Bearer" && $type === "Bearer")
-            API::response('json', ['message' => "Expected $type token but got " . $authData[0]], 403);
+            Http::response('json', ['message' => "Expected $type token but got " . $authData[0]], 403);
 
         $token = $authData[1];
         if (!Session::findOne($token))
-            API::response('json', [
+            Http::response('json', [
                 "message" => 'Invalid token.'
             ], 403);
 
@@ -43,7 +47,7 @@ class Auth
         $char = str_shuffle('_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
         $charlen = strlen($char);
         $hash = str_shuffle($user->password);
-        $token = "pokE0m$user->id.$hash.";
+        $token = "emon1uid$user->id.$hash.";
         for ($i = 0; $i < $length; $i++)
             $token .= $char[rand(0, $charlen - 1)];
         return Session::create([
@@ -55,7 +59,6 @@ class Auth
 
     /**
      * Grabs user based on the token.
-     * Acts like middleware: throws exception if user is not authorized.
      *
      * @return User User object.
      */

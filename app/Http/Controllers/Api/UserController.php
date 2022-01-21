@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use Framework\API;
+use Framework\Api\Http;
 use App\Models\User;
 
 /**
@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(): void
     {
-        API::response('json', User::getAll());
+        Http::response('json', User::getAll());
     }
 
     /**
@@ -28,6 +28,6 @@ class UserController extends Controller
      */
     public function show(int $id): void
     {
-        API::response('json', User::findOne($id));
+        Http::response('json', User::findOne($id));
     }
 }

@@ -36,7 +36,8 @@ class CartController implements ControllerInterface
             foreach (Session::get('cart') as $product_id)
                 \App\Models\Order::create([
                     'user_id' => $user_id,
-                    'product_id' => $product_id
+                    'product_id' => $product_id,
+                    'quantity' => 1,
                 ]);
             Session::create('cart', []);
             header("Refresh:0");

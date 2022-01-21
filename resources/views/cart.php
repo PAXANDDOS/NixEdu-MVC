@@ -8,26 +8,22 @@
 </div>
 <div class="main">
     <div class="cartList">
-        <?php
-        $exists = false;
-        foreach ($products as $product) {
-            echo "
+        <?= $exists = false ?>
+        <?php foreach ($products as $product) : ?>
             <form class='cartItem' method='POST'>
-                <img src='" . $product->image . "'>
-                <h3>" . $product->name . "</h3>
-                <input type='number' style='display:none' name='removeItem' value='" . $product->id . "'/>
+                <img src='/public/images/<?= $product->image ?>'>
+                <h3><?= $product->name ?></h3>
+                <input type='number' style='display:none' name='removeItem' value='<?= $product->id ?>' />
                 <input type='submit' name='remove' value='Remove'>
             </form>
-            ";
-            $exists = true;
-        }
-        if (!$exists)
-            echo "<h2>Nothing in cart yet. Start shopping!</h2>";
-        else echo "
-        <form class='cartConfirm' method='POST'>
-            <input type='submit' name='order' value='Submit order'>
-        </form>
-        ";
-        ?>
+            <?php $exists = true ?>
+        <?php endforeach ?>
+        <?php if ($exists) : ?>
+            <form class='cartConfirm' method='POST'>
+                <input type='submit' name='order' value='Submit order'>
+            </form>
+        <?php else : ?>
+            <h2>Nothing in cart yet. Start shopping!</h2>
+        <?php endif ?>
     </div>
 </div>

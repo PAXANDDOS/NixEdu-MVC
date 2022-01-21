@@ -68,7 +68,7 @@
         <div class="page_head">
             <div id="number">
                 <h2>CATALOG</h2>
-                <span><b>PRODUCTS:</b> ( 1 - <?php echo count($products) ?> of <?php echo count($products) ?> )</span>
+                <span><b>PRODUCTS:</b> ( 1 - <?= count($products) ?> of <?= count($products) ?> )</span>
             </div>
             <div id="pages">
                 <span>SORT BY:</span>
@@ -97,20 +97,16 @@
             </div>
         </div>
         <div class="page_body">
-            <?php
-            foreach ($products as $value => $key) {
-                echo "
-                <a href='/catalog/$key->id'>
+            <?php foreach ($products as $value => $key) : ?>
+                <a href='/catalog/<?= $key->id ?>'>
                     <div class='single'>
-                        <img src='/public/images/$key->image' alt='Product image'>
-                        <h3>$key->name</h3>
-                        <span>$ $key->price</span>
+                        <img src='/public/images/<?= $key->image ?>' alt='Product image'>
+                        <h3><?= $key->name ?></h3>
+                        <span>$ <?= $key->price ?></span>
                         <label>BUY</label>
                     </div>
                 </a>
-                ";
-            }
-            ?>
+            <?php endforeach ?>
         </div>
     </div>
 </div>
