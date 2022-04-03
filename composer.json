@@ -24,12 +24,12 @@
         }
     ],
     "require-dev": {
-        "codeception/codeception": "^4.1",
-        "codeception/module-asserts": "^2.0",
-        "codeception/module-db": "^2.0",
-        "codeception/module-phpbrowser": "^2.0",
-        "codeception/module-rest": "^2.0",
-        "vlucas/phpdotenv": "^5.4"
+        "codeception/codeception": "^5.0",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-db": "^3.0",
+        "codeception/module-phpbrowser": "^3.0",
+        "codeception/module-rest": "^3.0",
+        "vlucas/phpdotenv": "^5.0"
     },
     "scripts": {
         "serve": [
@@ -74,6 +74,6 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "RC",
     "prefer-stable": true
 }
